@@ -5,10 +5,9 @@
         <classes>
             <class name="com.guide.beginners.testng.samplejava.tutorial1.TestNgAnnotationsOrder"/>
             <class name="com.guide.beginners.testng.samplejava.tutorial1.TestNgAnnotationsOrderWithDataProviders"/>
-
         </classes>
     </test>
-    <test verbose="2" preserve-order="true" name="selenium">
+    <test verbose="2" preserve-order="true" name="selenium" parallel="true">
         <classes>
             <class name="com.guide.beginners.testng.theinternet.PositiveTest"/>
         </classes>
