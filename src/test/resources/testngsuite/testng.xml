@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="D:/GitProject/beginnersguidefortesting">
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.TestNgAnnotationsOrder"/>
+            <class name="com.guide.beginners.testng.theinternet.TestNgAnnotationsOrderWithDataProviders"/>
+
+        </classes>
+    </test>
+    <test verbose="2" preserve-order="true" name="selenium">
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.PositiveTest"/>
+        </classes>
+    </test>
+</suite>
