@@ -27,11 +27,16 @@ public class PositiveTest {
     private By submitButton = By.cssSelector("button[type='submit']");
     private String username = "tomsmith";
     private String password = "SuperSecretPassword!";
+    private By homepageSuccessMessage = By.cssSelector("div#flash");
+    private By homePgeHeader = By.tagName("h2");
+    private By logoutButton = By.cssSelector("a.button.secondary.radius");
+    private WebDriverWait webDriverWait;
 
     @BeforeClass
     void startbroweser() {
         WebDriverManager.chromedriver( ).setup( );
         driver = new ChromeDriver( );
+        webDriverWait = new WebDriverWait(driver, MAX_TIMEOUT);
         driver.manage( ).timeouts( ).implicitlyWait(MAX_TIMEOUT, TimeUnit.SECONDS);
         logger.info("WebDriver Setup");
         if (Objects.isNull(driver)) {
@@ -46,7 +51,7 @@ public class PositiveTest {
         driver.manage( ).timeouts( ).setScriptTimeout(MAX_TIMEOUT, TimeUnit.SECONDS);
         logger.info("launching aut:" + aut);
     }
-
+/**/
     @Test
     void validateCurrentURl() {
         assertThat(driver.getCurrentUrl( ).equalsIgnoreCase(aut));
@@ -59,51 +64,55 @@ public class PositiveTest {
 
     @Test
     void validateVisibilityOfHeader() {
-        assertThat(new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(headerText)).isDisplayed( ));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(headerText)).isDisplayed( ));
     }
 
     @Test
     void validateVisbilityOfUserNameField() {
-        assertThat(new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(formFieldUserName)).isDisplayed( ));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(formFieldUserName)).isDisplayed( ));
     }
 
     @Test
     void validateVisbilityOfPasswordField() {
-        assertThat(new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(formFieldPassword)).isDisplayed( ));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(formFieldPassword)).isDisplayed( ));
     }
 
     @Test
     void validateVisbilityOfLoginButton() {
-        assertThat(new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(submitButton)).isDisplayed( ));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(submitButton)).isDisplayed( ));
     }
 
     @Test
     void validateVisbilityOfHeaderText() {
-        assertThat(new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(headerText)).getText( ).equalsIgnoreCase("Login Page"));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(headerText)).getText( ).equalsIgnoreCase("Login Page"));
     }
 
     @Test
     void validateLoginFunctionality() {
-        new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(formFieldUserName)).sendKeys(username);
-        logger.info("Entering UserName:"+username);
-        new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(formFieldPassword)).sendKeys(password);
-        logger.info("Entering password:"+password);
-        new WebDriverWait(driver, MAX_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(submitButton)).click( );
+        logger.info("Entering UserName:" + username);
+        logger.info("Entering password:" + password);
+        driver.findElement(formFieldUserName).sendKeys(username);
+        driver.findElement(formFieldPassword).sendKeys(password);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(submitButton)).click( );
+        assertThat(webDriverWait.until(ExpectedConditions.textToBePresentInElementLocated(homepageSuccessMessage, "You logged into a secure area!")));
+        assertThat(webDriverWait.until(ExpectedConditions.textToBe(homePgeHeader, "Secure Area")));
+        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(logoutButton)).isDisplayed());
+        driver.findElement(logoutButton).click( );
     }
 
+
     @AfterMethod
-    void validateSessionRest(){
-        driver.navigate().refresh();
+    void validateSessionRest() {
         logger.info("Refresh the session");
     }
 
 
     @AfterClass
-    void quitBrowser(){
+    void quitBrowser() {
         logger.info("Closing the WebDriver");
-        driver.close();
+        driver.close( );
         logger.info("Quit the WebDriver");
-        driver.quit();
+        driver.quit( );
     }
 
 
