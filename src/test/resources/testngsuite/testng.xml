@@ -3,8 +3,8 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="D:/GitProject/beginnersguidefortesting">
         <classes>
-            <class name="com.guide.beginners.testng.theinternet.TestNgAnnotationsOrder"/>
-            <class name="com.guide.beginners.testng.theinternet.TestNgAnnotationsOrderWithDataProviders"/>
+            <class name="com.guide.beginners.testng.samplejava.tutorial1.TestNgAnnotationsOrder"/>
+            <class name="com.guide.beginners.testng.samplejava.tutorial1.TestNgAnnotationsOrderWithDataProviders"/>
 
         </classes>
     </test>

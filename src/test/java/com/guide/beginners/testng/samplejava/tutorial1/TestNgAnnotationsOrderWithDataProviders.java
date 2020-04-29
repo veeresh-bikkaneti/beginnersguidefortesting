@@ -1,4 +1,4 @@
-package com.guide.beginners.testng.theinternet;
+package com.guide.beginners.testng.samplejava.tutorial1;
 
 
 import org.apache.logging.log4j.LogManager;

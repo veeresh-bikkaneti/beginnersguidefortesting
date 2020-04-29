@@ -44,7 +44,18 @@
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
 
@@ -81,6 +92,8 @@
         <testng.version>6.14.3</testng.version>
         <selenium-java.version>3.14.0</selenium-java.version>
         <log4j.version>2.6.1</log4j.version>
+        <webdrivermanager.version>3.8.1</webdrivermanager.version>
+        <assertj-core.version>3.14.0</assertj-core.version>
     </properties>
 
 

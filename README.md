@@ -39,16 +39,12 @@ In that case, TestNG guarantees that the "@Before" methods are executed in inher
  and the "@After" methods in reverse order (going up the inheritance chain).
  
  TestNG.xml will help you run a suite of tests.
- <suite name="All Test Suite">
-     <test verbose="2" preserve-order="true" name="D:/GitProject/beginnersguidefortesting">
-         <classes>
-             <class name="com.guide.beginners.testng.theinternet.TestNgAnnotationsOrder"/>
-         </classes>
-     </test>
- </suite>
+ 
+***package com.guide.beginners.testng.samplejava.tutorial1*** 
+-should share insight on how testNG works
 
-When you execute the above class you should see  
- Or 
- you can run your test from each class. 
+***package com.guide.beginners.testng.theinternet;*** 
+-should share insight on usage of testNG with selenium
+
  
  
