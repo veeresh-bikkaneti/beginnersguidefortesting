@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PositiveTest {
-    private static Logger logger = LogManager.getLogger(PositiveTest.class.getName( ));
+public class SeleniumFirstTestSuite {
+    private static Logger logger = LogManager.getLogger(SeleniumFirstTestSuite.class.getName( ));
     private final long MAX_TIMEOUT = 20l;
     private WebDriver driver;
     private String aut = "https://the-internet.herokuapp.com/login";
