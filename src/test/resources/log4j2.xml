@@ -91,7 +91,7 @@
             <AppenderRef ref="Console"  />
         </Logger>
 
-        <Logger name="org.framework.package" additivity="false" level="info">
+        <Logger name="com" additivity="false" level="info">
             <AppenderRef ref="debugLog" />
             <AppenderRef ref="infoLog"  />
             <AppenderRef ref="errorLog" />
