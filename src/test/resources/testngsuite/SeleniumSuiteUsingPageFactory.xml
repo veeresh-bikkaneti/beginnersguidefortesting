@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SeleniumSuite" parallel="tests" thread-count="2">
+
+
+    <test verbose="5" preserve-order="true" name="Positive-pagefactoryBy" >
+        <parameter name="browser" value="chrome"/>
+        <parameter name="username" value="tomsmith"/>
+        <parameter name="password" value="SuperSecretPassword!"/>
+        <parameter name="successmessage" value="You logged into a secure area!"/>
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usingpageobjects.PositiveScenario"/>
+        </classes>
+    </test>
+
+
+    <test verbose="5" preserve-order="true" name="Negative-pagefactoryBy">
+        <parameter name="browser" value="opera"/>
+        <parameter name="username" value="tomsmith"/>
+        <parameter name="password" value="SuperSecretPassword!"/>
+        <parameter name="invalidusername" value="tomsmith1"/>
+        <parameter name="invalidpassword" value="SuperSecretPassword!!e"/>
+        <parameter name="url" value="https://the-internet.herokuapp.com"/>
+        <parameter name="failuremessagepassword" value="Your password is invalid!"/>
+        <parameter name="failuremessageusername" value="Your username is invalid!"/>
+        <parameter name="h2" value="Secure Area"/>
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usingpageobjects.NegativeScenarios"/>
+        </classes>
+    </test>
+
+
+</suite>

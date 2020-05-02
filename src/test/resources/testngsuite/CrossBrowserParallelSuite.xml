@@ -6,39 +6,58 @@
         <parameter name="browser" value="chrome"/>
         <parameter name="username" value="tomsmith"/>
         <parameter name="password" value="SuperSecretPassword!"/>
-        <parameter name="url" value="https://the-internet.herokuapp.com/login"/>
-        <parameter name="expectedmessage" value="You logged into a secure area!"/>
+        <parameter name="url" value="https://the-internet.herokuapp.com"/>
+        <parameter name="successmessage" value="You logged into a secure area!"/>
         <parameter name="h2" value="Secure Area"/>
         <classes>
-            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.PositiveLoginTestScenario"/>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usinglocators.PositiveScenarioLoginPageValidation"/>
         </classes>
     </test>
+
+    <test verbose="5" preserve-order="true" name="chrome-negativeLoginTestScenario">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="username" value="tomsmith"/>
+        <parameter name="password" value="SuperSecretPassword!"/>
+        <parameter name="invalidusername" value="tomsmith1"/>
+        <parameter name="invalidpassword" value="SuperSecretPassword!!e"/>
+        <parameter name="url" value="https://the-internet.herokuapp.com"/>
+        <parameter name="failuremessagepassword" value="Your password is invalid!"/>
+        <parameter name="failuremessageusername" value="Your username is invalid!"/>
+        <parameter name="h2" value="Secure Area"/>
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usinglocators.NegativeScenarioLoginTest"/>
+        </classes>
+    </test>
+
 
 
     <test verbose="5" preserve-order="true" name="opera-PositiveLoginTestScenario">
-        <parameter name="browser" value="opera"/>
+        <parameter name="browser" value="chrome"/>
         <parameter name="username" value="tomsmith"/>
         <parameter name="password" value="SuperSecretPassword!"/>
-        <parameter name="url" value="https://the-internet.herokuapp.com/login"/>
-        <parameter name="expectedmessage" value="You logged into a secure area!"/>
+        <parameter name="url" value="https://the-internet.herokuapp.com"/>
+        <parameter name="successmessage" value="You logged into a secure area!"/>
         <parameter name="h2" value="Secure Area"/>
         <classes>
-            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.PositiveLoginTestScenario"/>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usinglocators.PositiveScenarioLoginPageValidation"/>
         </classes>
     </test>
 
-
-  <!--  <test verbose="5" preserve-order="true" name="PositiveLoginTestScenario" >
-        <parameter name="browser" value="firefox"/>
+    <test verbose="5" preserve-order="true" name="opera-negativeLoginTestScenario">
+        <parameter name="browser" value="opera"/>
         <parameter name="username" value="tomsmith"/>
         <parameter name="password" value="SuperSecretPassword!"/>
-        <parameter name="url" value="https://the-internet.herokuapp.com/login"/>
-        <parameter name="expectedmessage" value="You logged into a secure area!"/>
+        <parameter name="invalidusername" value="tomsmith1"/>
+        <parameter name="invalidpassword" value="SuperSecretPassword!!e"/>
+        <parameter name="url" value="https://the-internet.herokuapp.com"/>
+        <parameter name="failuremessagepassword" value="Your password is invalid!"/>
+        <parameter name="failuremessageusername" value="Your username is invalid!"/>
         <parameter name="h2" value="Secure Area"/>
         <classes>
-            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.PositiveLoginTestScenario"/>
+            <class name="com.guide.beginners.testng.theinternet.frameworktestng.testcases.usinglocators.NegativeScenarioLoginTest"/>
         </classes>
-    </test>-->
+    </test>
+
 
 
 </suite>

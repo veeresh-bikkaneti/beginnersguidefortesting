@@ -1,10 +1,15 @@
-package com.guide.beginners.testng.theinternet.frameworktestng.testcases;
+package com.guide.beginners.testng.theinternet.frameworktestng.testcases.usinglocators;
+/**
+ * Created by IntelliJ IDEA.
+ * User: Veeresh Bikkaneti
+ * Date: 05-02-2020
+ * Time: 12:34 PM
+ */
 
-import com.guide.beginners.testng.theinternet.frameworktestng.base.BaseTest;
+
 import com.guide.beginners.testng.theinternet.frameworktestng.hooks.HookupTests;
-import com.guide.beginners.testng.theinternet.frameworktestng.pages.LoginPO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.guide.beginners.testng.theinternet.frameworktestng.pagefactory.pages.LoginPO;
+import com.guide.beginners.testng.theinternet.frameworktestng.pagefactory.pages.SecureAreaPO;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -12,11 +17,19 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PositiveLoginTestScenario extends HookupTests {
-    private LoginPO loginPO;
 
-    public PositiveLoginTestScenario() {
+/*
+Using Page locators in com.guide.beginners.testng.theinternet.frameworktestng.pagefactory.pages;
+We are building the page objects here in the test class by referring the locators in pages.
+ */
+public class PositiveScenarioLoginPageValidation extends HookupTests {
+    private LoginPO loginPO;
+    private SecureAreaPO secureAreaPO;
+
+
+    public PositiveScenarioLoginPageValidation() {
         this.loginPO = new LoginPO( );
+        this.secureAreaPO=new SecureAreaPO();
     }
 
     @Parameters("url")
@@ -48,7 +61,7 @@ public class PositiveLoginTestScenario extends HookupTests {
 
     @Test
     void validateVisbilityOfLoginButton() {
-        assertThat(getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(loginPO.getSubmitButton( ))).isDisplayed( ));
+        assertThat(getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(loginPO.getLoginButton( ))).isDisplayed( ));
     }
 
     @Test
@@ -56,18 +69,18 @@ public class PositiveLoginTestScenario extends HookupTests {
         assertThat(getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(loginPO.getHeaderText( ))).getText( ).equalsIgnoreCase("Login Page"));
     }
 
-    @Parameters({"username", "password", "expectedmessage", "h2"})
+    @Parameters({"username", "password", "successmessage", "h2"})
     @Test
     void validateLoginFunctionality(@Optional("tomsmith") String username, @Optional("SuperSecretPassword!") String password, @Optional("You logged into a secure area!") String expectedmessage, @Optional("Secure Area") String securearea) {
         logger.info("Entering UserName:" + username);
         logger.info("Entering password:" + password);
         driver.findElement(loginPO.getFormFieldUserName( )).sendKeys(username);
         driver.findElement(loginPO.getFormFieldPassword( )).sendKeys(password);
-        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(loginPO.getSubmitButton( ))).click( );
-        assertThat(getWebDriverWait().until(ExpectedConditions.textToBePresentInElementLocated(loginPO.getHomepageSuccessMessage( ), expectedmessage)));
-        assertThat(getWebDriverWait().until(ExpectedConditions.textToBe(loginPO.getHomePgeHeader( ), securearea)));
-        assertThat(getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(loginPO.getLogoutButton( ))).isDisplayed( ));
-        driver.findElement(loginPO.getLogoutButton( )).click( );
+        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(loginPO.getLoginButton( ))).click( );
+        assertThat(getWebDriverWait().until(ExpectedConditions.textToBePresentInElementLocated(secureAreaPO.getHomepageSuccessMessage( ), expectedmessage)));
+        assertThat(getWebDriverWait().until(ExpectedConditions.textToBe(secureAreaPO.getHomePgeHeader( ), securearea)));
+        assertThat(getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(secureAreaPO.getLogoutButton( ))).isDisplayed( ));
+        driver.findElement(secureAreaPO.getLogoutButton( )).click( );
     }
 
 

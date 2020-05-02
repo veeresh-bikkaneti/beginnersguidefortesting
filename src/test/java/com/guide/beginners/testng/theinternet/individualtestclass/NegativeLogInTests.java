@@ -1,5 +1,10 @@
 package com.guide.beginners.testng.theinternet.individualtestclass;
-
+/**
+ * Created by IntelliJ IDEA.
+ * User: Veeresh Bikkaneti
+ * Date: 05-02-2020
+ * Time: 12:34 PM
+ */
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

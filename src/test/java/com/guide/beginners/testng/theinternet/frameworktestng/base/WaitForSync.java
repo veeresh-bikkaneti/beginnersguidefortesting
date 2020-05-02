@@ -1,5 +1,10 @@
 package com.guide.beginners.testng.theinternet.frameworktestng.base;
-
+/**
+ * Created by IntelliJ IDEA.
+ * User: Veeresh Bikkaneti
+ * Date: 05-02-2020
+ * Time: 12:34 PM
+ */
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaitForSync extends BaseTest {

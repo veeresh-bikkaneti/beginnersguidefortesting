@@ -1,7 +1,13 @@
 package com.guide.beginners.testng.theinternet.frameworktestng.base;
 
+/**
+ * Created by IntelliJ IDEA.
+ * User: Veeresh Bikkaneti
+ * Date: 05-02-2020
+ * Time: 12:34 PM
+ */
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
