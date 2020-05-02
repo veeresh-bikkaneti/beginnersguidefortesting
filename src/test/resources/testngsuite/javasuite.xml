@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="java Test Suite">
+    <test verbose="2" preserve-order="true"  name="beginnersguidefortesting">
+        <classes>
+            <class name="com.guide.beginners.testng.samplejava.annotations.AnnotationsOrder"/>
+            <class name="com.guide.beginners.testng.samplejava.annotations.DataProviders"/>
+        </classes>
+    </test>
+
+    <!--Paramaters sample-->
+    <parameter name="test-param"  value="Passing Parameter"/>
+    <test verbose="5" preserve-order="true"  name="seleniumframework" parallel="false">
+        <classes>
+            <class name="com.guide.beginners.testng.samplejava.attributes.ParametersExampl"/>
+        </classes>
+    </test>
+
+</suite>

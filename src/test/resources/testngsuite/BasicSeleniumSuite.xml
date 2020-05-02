@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumClass">
+
+    <test verbose="5" preserve-order="true" name="seleniumClass" parallel="false">
+        <classes>
+            <class name="com.guide.beginners.testng.theinternet.individualtestclass.Step1"/>
+            <class name="com.guide.beginners.testng.theinternet.individualtestclass.Step2"/>
+            <class name="com.guide.beginners.testng.theinternet.individualtestclass.Step3"/>
+        </classes>
+    </test>
+
+</suite>

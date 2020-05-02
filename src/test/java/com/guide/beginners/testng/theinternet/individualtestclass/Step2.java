@@ -1,4 +1,4 @@
-package com.guide.beginners.testng.theinternet;
+package com.guide.beginners.testng.theinternet.individualtestclass;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.Level;
@@ -16,8 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SeleniumFirstTestSuite {
-    private static Logger logger = LogManager.getLogger(SeleniumFirstTestSuite.class.getName( ));
+/*
+extracting all variable components of the test and using additional testng annotations to create a chain of events
+
+ */
+public class Step2 {
+    private static Logger logger = LogManager.getLogger(Step2.class.getName( ));
     private final long MAX_TIMEOUT = 20l;
     private WebDriver driver;
     private String aut = "https://the-internet.herokuapp.com/login";
@@ -95,8 +99,6 @@ public class SeleniumFirstTestSuite {
         driver.findElement(formFieldPassword).sendKeys(password);
         webDriverWait.until(ExpectedConditions.elementToBeClickable(submitButton)).click( );
         assertThat(webDriverWait.until(ExpectedConditions.textToBePresentInElementLocated(homepageSuccessMessage, "You logged into a secure area!")));
-        assertThat(webDriverWait.until(ExpectedConditions.textToBe(homePgeHeader, "Secure Area")));
-        assertThat(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(logoutButton)).isDisplayed());
         driver.findElement(logoutButton).click( );
     }
 

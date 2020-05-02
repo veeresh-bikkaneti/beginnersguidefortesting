@@ -1,12 +1,18 @@
-package com.guide.beginners.testng.samplejava.tutorial1;
+package com.guide.beginners.testng.samplejava.annotations;
 
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.*;
 
-public class TestNgAnnotationsOrder {
-    private static Logger logger = LogManager.getLogger(TestNgAnnotationsOrder.class.getName( ));
+public class DataProviders {
+    private static Logger logger = LogManager.getLogger(DataProviders.class.getName( ));
+
+    @DataProvider(name = "d1")
+    Object[] DataProvider() {
+        logger.info("---DataProvider--");
+        return new String[]{"---DataProvider--"};
+    }
 
     @BeforeSuite
     void BeforeSuite() {
@@ -28,9 +34,10 @@ public class TestNgAnnotationsOrder {
         logger.info("#4: BeforeMethod");
     }
 
-    @Test
-    void actualTest() {
+    @Test(dataProvider = "d1")
+    void actualTest(String[] a) {
         logger.info("#5: Test");
+        logger.info(a[0].toString());
     }
 
     @AfterMethod
