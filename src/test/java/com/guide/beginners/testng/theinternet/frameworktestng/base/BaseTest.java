@@ -7,6 +7,7 @@ package com.guide.beginners.testng.theinternet.frameworktestng.base;
  * Time: 12:34 PM
  */
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,21 +26,29 @@ public abstract class BaseTest {
     protected Logger logger;
     protected WebDriver driver = null;
 
-    @Parameters({"browser"})
+    @Parameters({"browser", "environment" })
     @BeforeClass(alwaysRun = true)
-    public void setUp(@Optional("chrome") String browser, ITestContext ctx) {
+    public void setUp(@Optional("chrome") String browser, ITestContext ctx, @Optional("local") String environment) {
         if (Objects.isNull(this.driver)) {
             String testName = ctx.getCurrentXmlTest( ).getName( );
             logger = LogManager.getLogger(testName);
             // Create driver
             BrowserFactory browserFactory = new BrowserFactory(browser, logger);
-            this.driver = browserFactory.getWebDriver( );
+            if (StringUtils.equalsIgnoreCase(environment, "grid")) {
+                this.driver = browserFactory.createRemoteWebDriverOnGrid( );
+            } else {
+                this.driver = browserFactory.getWebDriver( );
+            }
             this.driver.manage( ).timeouts( ).implicitlyWait(MAX_TIMEOUT, TimeUnit.SECONDS);
-            logger.info("WebDriver Setup");
+            logger.info("Env setup:" + environment + "\nWebDriver Setup:" + browser);
         } else {
             logger.throwing(Level.FATAL, new NullPointerException( ));
         }
+        setCurrentThreadName();
     }
+
+
+
 
     @AfterClass(alwaysRun = true)
     public void quitBrowser() {
@@ -48,4 +57,17 @@ public abstract class BaseTest {
         logger.info("Quit the WebDriver");
         driver.quit( );
     }
+
+    /**
+     * Sets thread name which includes thread id
+     */
+    private void setCurrentThreadName() {
+        Thread thread = Thread.currentThread( );
+        String threadName = thread.getName( );
+        String threadId = String.valueOf(thread.getId( ));
+        if (!threadName.contains(threadId)) {
+            thread.setName(threadName + " " + threadId);
+        }
+    }
+
 }

@@ -114,6 +114,26 @@ Command line executon:
 `mvn clean test -DsuiteXmlFiles=CrossBrowserParallelSuite.xml`
 
 
+###Setting up Selenium Grid
+one should be in the path:/src/test/resources/binaries 
+1. Using standard configuration
+Hub without hubconfig.json:
+`java -jar selenium-server-standalone.jar -role hub`
+
+Node without nodeConfig.json:
+`java -jar selenium-server-standalone.jar -role webdriver -hub http://192.168.0.5:4444/grid/register/`
+
+2. Using custom configuration
+Hub
+java -jar selenium-server-standalone.jar -role hub –hubConfig hubconfig.json
+
+Node:
+Java -Dwebdriver.chrome.driver="chromedriver.exe" -Dwebdriver.ie.driver="IEDriverServer.exe" -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone.jar -role node -nodeConfig nodeconfig.json
+
+
+
+
+java -jar selenium-server-standalone-3.141.59.jar -role hub –hubConfig hubconfig.json
 
 
 
