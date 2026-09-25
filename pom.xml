@@ -91,7 +91,7 @@
         <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
         <testng.version>6.14.3</testng.version>
         <selenium-java.version>3.14.0</selenium-java.version>
-        <log4j.version>2.13.3</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <webdrivermanager.version>3.8.1</webdrivermanager.version>
         <assertj-core.version>3.14.0</assertj-core.version>
     </properties>
