@@ -18,8 +18,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.time.Duration;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public abstract class BaseTest {
     protected final long MAX_TIMEOUT = 20l;
@@ -39,7 +39,7 @@ public abstract class BaseTest {
             } else {
                 this.driver = browserFactory.getWebDriver( );
             }
-            this.driver.manage( ).timeouts( ).implicitlyWait(MAX_TIMEOUT, TimeUnit.SECONDS);
+            this.driver.manage( ).timeouts( ).implicitlyWait(Duration.ofSeconds(MAX_TIMEOUT));
             logger.info("Env setup:" + environment + "\nWebDriver Setup:" + browser);
         } else {
             logger.throwing(Level.FATAL, new NullPointerException( ));

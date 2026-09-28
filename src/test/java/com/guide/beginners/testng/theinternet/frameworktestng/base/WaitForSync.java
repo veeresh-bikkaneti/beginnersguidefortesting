@@ -7,11 +7,13 @@ package com.guide.beginners.testng.theinternet.frameworktestng.base;
  */
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class WaitForSync extends BaseTest {
     private WebDriverWait webDriverWait;
 
     public WebDriverWait getWebDriverWait() {
-        this.webDriverWait = new WebDriverWait(driver, MAX_TIMEOUT);
+        this.webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(MAX_TIMEOUT));
         return webDriverWait;
     }
 

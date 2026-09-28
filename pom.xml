@@ -88,11 +88,11 @@
     <properties>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
+        <maven-compiler-plugin.source>11</maven-compiler-plugin.source>
         <testng.version>7.5.1</testng.version>
-        <selenium-java.version>3.14.0</selenium-java.version>
+        <selenium-java.version>4.49.0</selenium-java.version>
         <log4j.version>2.25.5</log4j.version>
-        <webdrivermanager.version>3.8.1</webdrivermanager.version>
+        <webdrivermanager.version>6.1.0</webdrivermanager.version>
         <assertj-core.version>3.27.7</assertj-core.version>
     </properties>
 
