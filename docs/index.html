@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>beginnersguidefortesting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F4F1;
+    --surface:#E6ECE7;
+    --ink:#12201A;
+    --muted:#4B5A52;
+    --accent:#1E7A56;
+    --accent-contrast:#FFFFFF;
+    --rule:#C7D2C9;
+    --code-bg:#101614;
+    --code-ink:#DCEFE3;
+    --code-muted:#7FA391;
+    --warn:#A8672E;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0D1411;
+      --surface:#141C18;
+      --ink:#E7EFE9;
+      --muted:#8FA398;
+      --accent:#5FD9A4;
+      --accent-contrast:#06110C;
+      --rule:#253028;
+      --code-bg:#06100B;
+      --code-ink:#BFEAD3;
+      --code-muted:#5C7A6C;
+      --warn:#E8B454;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D1411;
+    --surface:#141C18;
+    --ink:#E7EFE9;
+    --muted:#8FA398;
+    --accent:#5FD9A4;
+    --accent-contrast:#06110C;
+    --rule:#253028;
+    --code-bg:#06100B;
+    --code-ink:#BFEAD3;
+    --code-muted:#5C7A6C;
+    --warn:#E8B454;
+    color-scheme: dark;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, sans-serif;
+    padding-inline:16px;
+    padding-block:40px;
+  }
+  h1,h2,.mono{ font-family:"JetBrains Mono", ui-monospace, monospace; }
+
+  .article{ max-width:680px; margin:0 auto; }
+
+  .mast{
+    max-width:680px; margin:0 auto 28px;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:var(--surface);
+    overflow:hidden;
+  }
+  .mast-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:9px 12px;
+    border-bottom:1px solid var(--rule);
+  }
+  .dot{ width:9px; height:9px; border-radius:50%; background:var(--rule); }
+  .mast-path{
+    margin-left:8px; font-size:12px; color:var(--muted);
+    font-family:"JetBrains Mono", monospace;
+  }
+  .mast-nav{
+    margin-left:auto; font-size:12px; color:var(--muted);
+    font-family:"JetBrains Mono", monospace;
+  }
+  .mast-nav a{ color:var(--accent); text-decoration:none; }
+  .mast-nav a:hover{ text-decoration:underline; }
+  .mast-body{ padding:22px 22px 26px; }
+  .mast h1{
+    margin:0 0 8px; font-size:26px; line-height:1.2; font-weight:700;
+    text-wrap:balance;
+  }
+  .mast p{ margin:0; color:var(--muted); font-size:15px; max-width:52ch; }
+
+  h2{
+    font-size:14px; font-weight:700; letter-spacing:.04em;
+    color:var(--accent); margin:40px 0 14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  h2::before{ content:"$"; color:var(--muted); }
+  h2 .rest{ color:var(--ink); text-transform:none; letter-spacing:0; font-size:15px; font-weight:600; }
+  h3{
+    font-family:"JetBrains Mono", monospace; font-size:14px; font-weight:700;
+    color:var(--ink); margin:26px 0 8px;
+  }
+
+  p{ font-size:16px; line-height:1.65; margin:0 0 16px; max-width:66ch; }
+  p code, li code{
+    font-family:"JetBrains Mono", monospace; font-size:0.88em;
+    background:var(--surface); border:1px solid var(--rule);
+    border-radius:4px; padding:1px 5px;
+  }
+  ul, ol{ margin:0 0 16px; padding-left:1.3em; }
+  li{ font-size:16px; line-height:1.6; margin-bottom:8px; max-width:64ch; }
+  li strong{ color:var(--ink); }
+  a{ color:var(--accent); }
+
+  .callout{
+    border-left:3px solid var(--warn);
+    background:var(--surface);
+    border-radius:0 8px 8px 0;
+    padding:14px 16px;
+    margin:20px 0;
+  }
+  .callout p{ margin:0; font-size:15px; }
+  .callout .label{
+    font-family:"JetBrains Mono", monospace; font-size:11px; font-weight:700;
+    letter-spacing:.06em; color:var(--warn); display:block; margin-bottom:6px;
+  }
+
+  .banner{
+    border-left:3px solid var(--accent);
+    background:var(--surface);
+    border-radius:0 8px 8px 0;
+    padding:16px 18px;
+    margin:0 0 28px;
+    max-width:680px;
+    margin-inline:auto;
+  }
+  .banner .label{
+    font-family:"JetBrains Mono", monospace; font-size:11px; font-weight:700;
+    letter-spacing:.06em; color:var(--accent); display:block; margin-bottom:6px;
+  }
+  .banner p{ margin:0; font-size:15px; max-width:none; }
+  .banner a{ font-weight:700; }
+
+  .term{
+    margin:16px 0 22px; border-radius:8px; overflow:hidden;
+    border:1px solid var(--rule);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:6px; padding:7px 10px;
+    background:var(--surface); border-bottom:1px solid var(--rule);
+  }
+  .term-bar .dot{ background:var(--code-muted); }
+  .term-file{ margin-left:6px; font-size:11px; color:var(--muted); font-family:"JetBrains Mono", monospace; }
+  pre{
+    margin:0; padding:14px 16px; overflow-x:auto;
+    background:var(--code-bg); color:var(--code-ink);
+    font-family:"JetBrains Mono", monospace; font-size:13px; line-height:1.55;
+  }
+  pre .c{ color:var(--code-muted); }
+
+  .closing{
+    margin-top:44px; padding-top:22px; border-top:1px solid var(--rule);
+  }
+  .closing p{ font-size:16px; color:var(--muted); }
+  .closing p strong{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-bar">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="mast-path">~/beginnersguidefortesting</span>
+    <span class="mast-nav"><a href="testng-ladder.html">The TestNG Ladder &rarr;</a></span>
+  </div>
+  <div class="mast-body">
+    <h1>beginnersguidefortesting</h1>
+    <p>This will give beginners an idea on how to build and learn TestNG.</p>
+  </div>
+</header>
+
+<div class="banner">
+  <span class="label">the full walkthrough</span>
+  <p>This page is the raw reference README. For a step-by-step guide to the same material — built up one deliberate stage at a time, with a diagram of the TestNG lifecycle — read <a href="testng-ladder.html">The TestNG Ladder</a>.</p>
+</div>
+
+<main class="article">
+
+<h2><span class="rest">setup</span></h2>
+<ul>
+  <li><strong>Java JDK</strong> — <a href="https://www.oracle.com/java/technologies/javase-downloads.html">download</a>, plus a <a href="https://www.guru99.com/install-java.html">Windows install walkthrough</a>.</li>
+  <li><strong>Maven</strong> — <a href="https://maven.apache.org/download.cgi">download</a>, plus a <a href="https://www.mkyong.com/maven/how-to-install-maven-in-windows/">Windows install walkthrough</a>.</li>
+</ul>
+
+<h3>validate Java and Maven are correctly set up</h3>
+<p>Command line:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>java -version
+mvn -version</pre>
+</div>
+
+<h2><span class="rest">TestNG order of execution</span></h2>
+<ol>
+  <li><code>@BeforeSuite</code> — the annotated method will be run before all tests in this suite have run.</li>
+  <li><code>@BeforeTest</code> — the annotated method will be run before any test method belonging to the classes inside the <code>&lt;test&gt;</code> tag is run.</li>
+  <li><code>@BeforeClass</code> — the annotated method will be run before the first test method in the current class is invoked.</li>
+  <li><code>@BeforeMethod</code> — the annotated method will be run before each test method.</li>
+  <li><code>@Test</code> — marks a class or a method as part of the test.</li>
+  <li><code>@AfterMethod</code> — the annotated method will be run after each test method.</li>
+  <li><code>@AfterClass</code> — the annotated method will be run after all the test methods in the current class have been run.</li>
+  <li><code>@AfterTest</code> — the annotated method will be run after all the test methods belonging to the classes inside the <code>&lt;test&gt;</code> tag have run.</li>
+  <li><code>@AfterSuite</code> — the annotated method will be run after all tests in this suite have run.</li>
+</ol>
+<p>The annotations above will also be honored (inherited) when placed on a superclass of a TestNG class.</p>
+
+<p>Additional annotations:</p>
+<ol>
+  <li><code>@DataProvider</code></li>
+  <li><code>@Listeners</code></li>
+  <li><code>@Parameters</code></li>
+</ol>
+
+<h3>parameters</h3>
+<p><code>@Parameters</code> describes how to pass parameters to a <code>@Test</code> method. <code>value</code> is the list of variables used to fill the parameters of this method.</p>
+<p>Parameters:</p>
+<ol>
+  <li>Parameters from <code>testng.xml</code></li>
+  <li>Parameters with DataProviders</li>
+  <li>Parameters in reports</li>
+</ol>
+
+<div class="callout">
+  <span class="label">rule that survives every refactor</span>
+  <p>Do not declare test data as a class-level local variable — maintenance of the test data is a challenge if we have 100+ tests spread all over multiple packages.</p>
+</div>
+
+<p>Additional documentation can be accessed using: <a href="https://testng.org/doc/documentation-main.html">https://testng.org/doc/documentation-main.html</a>. <code>testng.xml</code> helps to execute a suite of tests.</p>
+
+<ul>
+  <li><code>package com.guide.beginners.testng.samplejava</code> — should share insight on how TestNG works.</li>
+  <li><code>package com.guide.beginners.testng.theinternet.individualtestclass</code> — should share insight on usage of TestNG with Selenium.</li>
+</ul>
+<p>With the knowledge gained from the above two packages, we shall spin off a Selenium TestNG framework.</p>
+
+<h2><span class="rest">step 1</span></h2>
+<p>Before designing a framework, develop a test that achieves a simple goal.</p>
+<p><code>class name="com.guide.beginners.testng.theinternet.individualtestclass.Step1"</code></p>
+<p>Demonstrate test design and the rough draft of code to check if it works.</p>
+
+<h3>step 2</h3>
+<p><code>class name="com.guide.beginners.testng.theinternet.individualtestclass.Step2"</code></p>
+<p>Demonstrates separating data and page objects from the tests. Here we're still declaring with <code>private</code> to class all variable components of the test, and using additional TestNG annotations to create a chain of events.</p>
+
+<h3>step 3</h3>
+<p><code>class name="com.guide.beginners.testng.theinternet.individualtestclass.Step3"</code></p>
+<p>Test data is now totally isolated and is passed in via <code>seleniumsuite.xml</code>. Refer the file path: <code>src\test\resources\testngsuite\seleniumsuite.xml</code>.</p>
+<p><code>@Optional</code> specifies that the current parameter is optional. TestNG will pass in a specified default value, or <code>null</code> if none is specified.</p>
+
+<h3>step 4</h3>
+<p>Extracting driver setup to base in framework: <code>package com.guide.beginners.testng.theinternet.frameworktestng.base</code></p>
+<p>We are using:</p>
+<ul>
+  <li><code>@BeforeClass</code> and <code>@AfterClass</code> to setup/teardown the <code>WebDriver</code>.</li>
+  <li><code>@BeforeMethod</code> for instantiating or launching the test URL, setting up the test environment, or building the context to test.</li>
+</ul>
+<p>Each test class is a scenario, and each class may have one or more <code>@Test</code> cases.</p>
+
+<h2><span class="rest">running in parallel</span></h2>
+<p>As per TestNG's official documentation, you can instruct TestNG to run your tests in separate threads in various ways.</p>
+
+<h3>1. parallel suites</h3>
+<p>This is useful if you are running several suite files (e.g. <code>java org.testng.TestNG testng1.xml testng2.xml</code>) and you want each of these suites to be run in a separate thread. You can use the following command line flag to specify the size of a thread pool:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>java org.testng.TestNG -suitethreadpoolsize 3 testng1.xml testng2.xml testng3.xml</pre>
+</div>
+
+<h3>2. parallel tests, classes and methods</h3>
+<ul>
+  <li><strong><code>parallel="methods"</code></strong> — TestNG will run all your test methods in separate threads. Dependent methods will also run in separate threads, but they will respect the order that you specified.</li>
+  <li><strong><code>parallel="tests"</code></strong> — TestNG will run all the methods in the same <code>&lt;test&gt;</code> tag in the same thread, but each <code>&lt;test&gt;</code> tag will be in a separate thread. This allows you to group all your classes that are not thread safe in the same <code>&lt;test&gt;</code> and guarantee they will all run in the same thread, while taking advantage of TestNG using as many threads as possible to run your tests.</li>
+  <li><strong><code>parallel="classes"</code></strong> — TestNG will run all the methods in the same class in the same thread, but each class will be run in a separate thread.</li>
+  <li><strong><code>parallel="instances"</code></strong> — TestNG will run all the methods in the same instance in the same thread, but two methods on two different instances will be running in different threads. Additionally, the attribute <code>thread-count</code> allows you to specify how many threads should be allocated for this execution.</li>
+</ul>
+<p>The <code>parallel</code> attribute on the <code>&lt;suite&gt;</code> tag can take one of the following values:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">testng.xml</span></div>
+  <pre>&lt;suite name="My suite" parallel="methods" thread-count="5"&gt;
+&lt;suite name="My suite" parallel="tests" thread-count="5"&gt;
+&lt;suite name="My suite" parallel="classes" thread-count="5"&gt;
+&lt;suite name="My suite" parallel="instances" thread-count="5"&gt;</pre>
+</div>
+
+<p>Note: the <code>@Test</code> attribute <code>timeOut</code> works in both parallel and non-parallel mode. If ever we want to run parallel, we cannot use parallel mode at the level of methods.</p>
+
+<h2><span class="rest">command line execution</span></h2>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>mvn clean test -DsuiteXmlFiles=CrossBrowserParallelSuite.xml</pre>
+</div>
+
+<h2><span class="rest">setting up Selenium Grid</span></h2>
+<p>One should be in the path: <code>/src/test/resources/binaries</code></p>
+
+<h3>1. using standard configuration</h3>
+<p>Hub without <code>hubconfig.json</code>:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">hub</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role hub</pre>
+</div>
+<p>Node without <code>nodeConfig.json</code>:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">node</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role webdriver -hub http://192.168.0.5:4444/grid/register/</pre>
+</div>
+
+<h3>2. using custom configuration</h3>
+<p>Hub:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">hub</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role hub &ndash;hubConfig hubconfig.json</pre>
+</div>
+<p>Node:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">node</span></div>
+  <pre>Java -Dwebdriver.chrome.driver="chromedriver.exe" -Dwebdriver.ie.driver="IEDriverServer.exe" -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone.jar -role node -nodeConfig nodeconfig.json</pre>
+</div>
+<p>This project pins the standalone Selenium server jar to a specific version:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">hub</span></div>
+  <pre>java -jar selenium-server-standalone-3.141.59.jar -role hub &ndash;hubConfig hubconfig.json</pre>
+</div>
+
+</main>
+</body>
+</html>

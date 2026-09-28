@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The TestNG Ladder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F4F1;
+    --surface:#E6ECE7;
+    --ink:#12201A;
+    --muted:#4B5A52;
+    --accent:#1E7A56;
+    --accent-contrast:#FFFFFF;
+    --rule:#C7D2C9;
+    --code-bg:#101614;
+    --code-ink:#DCEFE3;
+    --code-muted:#7FA391;
+    --warn:#A8672E;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0D1411;
+      --surface:#141C18;
+      --ink:#E7EFE9;
+      --muted:#8FA398;
+      --accent:#5FD9A4;
+      --accent-contrast:#06110C;
+      --rule:#253028;
+      --code-bg:#06100B;
+      --code-ink:#BFEAD3;
+      --code-muted:#5C7A6C;
+      --warn:#E8B454;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D1411;
+    --surface:#141C18;
+    --ink:#E7EFE9;
+    --muted:#8FA398;
+    --accent:#5FD9A4;
+    --accent-contrast:#06110C;
+    --rule:#253028;
+    --code-bg:#06100B;
+    --code-ink:#BFEAD3;
+    --code-muted:#5C7A6C;
+    --warn:#E8B454;
+    color-scheme: dark;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, sans-serif;
+    padding-inline:16px;
+    padding-block:40px;
+  }
+  h1,h2,.mono{ font-family:"JetBrains Mono", ui-monospace, monospace; }
+
+  .article{ max-width:680px; margin:0 auto; }
+
+  .mast{
+    max-width:680px; margin:0 auto 28px;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:var(--surface);
+    overflow:hidden;
+  }
+  .mast-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:9px 12px;
+    border-bottom:1px solid var(--rule);
+  }
+  .dot{ width:9px; height:9px; border-radius:50%; background:var(--rule); }
+  .mast-path{
+    margin-left:8px; font-size:12px; color:var(--muted);
+    font-family:"JetBrains Mono", monospace;
+  }
+  .mast-nav{
+    margin-left:auto; font-size:12px; color:var(--muted);
+    font-family:"JetBrains Mono", monospace;
+  }
+  .mast-nav a{ color:var(--accent); text-decoration:none; }
+  .mast-nav a:hover{ text-decoration:underline; }
+  .mast-body{ padding:22px 22px 26px; }
+  .mast h1{
+    margin:0 0 8px; font-size:26px; line-height:1.2; font-weight:700;
+    text-wrap:balance;
+  }
+  .mast p{ margin:0; color:var(--muted); font-size:15px; max-width:52ch; }
+
+  h2{
+    font-size:14px; font-weight:700; letter-spacing:.04em;
+    color:var(--accent); margin:40px 0 14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  h2::before{ content:"$"; color:var(--muted); }
+  h2 .rest{ color:var(--ink); text-transform:none; letter-spacing:0; font-size:15px; font-weight:600; }
+  h3{
+    font-family:"JetBrains Mono", monospace; font-size:14px; font-weight:700;
+    color:var(--ink); margin:26px 0 8px;
+  }
+
+  p{ font-size:16px; line-height:1.65; margin:0 0 16px; max-width:66ch; }
+  p code, li code{
+    font-family:"JetBrains Mono", monospace; font-size:0.88em;
+    background:var(--surface); border:1px solid var(--rule);
+    border-radius:4px; padding:1px 5px;
+  }
+  ul, ol{ margin:0 0 16px; padding-left:1.3em; }
+  li{ font-size:16px; line-height:1.6; margin-bottom:8px; max-width:64ch; }
+  li strong{ color:var(--ink); }
+  a{ color:var(--accent); }
+
+  .callout{
+    border-left:3px solid var(--warn);
+    background:var(--surface);
+    border-radius:0 8px 8px 0;
+    padding:14px 16px;
+    margin:20px 0;
+  }
+  .callout p{ margin:0; font-size:15px; }
+  .callout .label{
+    font-family:"JetBrains Mono", monospace; font-size:11px; font-weight:700;
+    letter-spacing:.06em; color:var(--warn); display:block; margin-bottom:6px;
+  }
+
+  .term{
+    margin:16px 0 22px; border-radius:8px; overflow:hidden;
+    border:1px solid var(--rule);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:6px; padding:7px 10px;
+    background:var(--surface); border-bottom:1px solid var(--rule);
+  }
+  .term-bar .dot{ background:var(--code-muted); }
+  .term-file{ margin-left:6px; font-size:11px; color:var(--muted); font-family:"JetBrains Mono", monospace; }
+  pre{
+    margin:0; padding:14px 16px; overflow-x:auto;
+    background:var(--code-bg); color:var(--code-ink);
+    font-family:"JetBrains Mono", monospace; font-size:13px; line-height:1.55;
+  }
+  pre .c{ color:var(--code-muted); }
+
+  figure{ margin:24px 0; }
+  .diagram-wrap{ overflow-x:auto; border-radius:8px; }
+  .diagram-wrap svg{ display:block; width:680px; max-width:none; height:auto; }
+  figcaption{
+    margin-top:10px; font-size:13px; color:var(--muted); line-height:1.5;
+    max-width:60ch;
+  }
+
+  .closing{
+    margin-top:44px; padding-top:22px; border-top:1px solid var(--rule);
+  }
+  .closing p{ font-size:16px; color:var(--muted); }
+  .closing p strong{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-bar">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="mast-path">~/beginnersguidefortesting</span>
+    <span class="mast-nav"><a href="index.html">&larr; README</a></span>
+  </div>
+  <div class="mast-body">
+    <h1>The TestNG Ladder</h1>
+    <p>A field guide to building a Selenium + TestNG framework one deliberate step at a time, from a five-line script to a base class other tests can inherit.</p>
+  </div>
+</header>
+
+<main class="article">
+
+<p>Most TestNG write-ups open with a diagram of nine annotations and expect you to memorize it before you've run a single test. This guide goes the other way. You write a script that does one thing, watch it pass, then take away exactly one convenience and rebuild it properly. By the fourth pass you'll have a small framework, and you'll understand every line of it, because you're the one who put it there.</p>
+
+<h2><span class="rest">setup</span></h2>
+<p>Two things need to be installed before any of this runs: the Java JDK and Maven.</p>
+<ul>
+  <li><strong>Java JDK</strong> — <a href="https://www.oracle.com/java/technologies/javase-downloads.html">download</a>, plus a <a href="https://www.guru99.com/install-java.html">Windows install walkthrough</a> if you need one.</li>
+  <li><strong>Maven</strong> — <a href="https://maven.apache.org/download.cgi">download</a>, plus a <a href="https://www.mkyong.com/maven/how-to-install-maven-in-windows/">Windows install walkthrough</a>.</li>
+</ul>
+<p>Confirm both from the command line before you touch a test file:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>java -version
+mvn -version</pre>
+</div>
+<p>If either command prints a version number, you're set. If not, fix your <code>PATH</code> first — a broken toolchain is the most common reason a "simple" first test won't run, and it has nothing to do with your test code.</p>
+
+<h2><span class="rest">execution order</span></h2>
+<p>TestNG runs your setup and teardown code in a strict, scoped order: a suite contains tests, a test contains classes, a class contains methods. Nine annotations mark those boundaries, and they fire in this sequence:</p>
+<ol>
+  <li><code>@BeforeSuite</code> runs once, before anything else in the suite.</li>
+  <li><code>@BeforeTest</code> runs before any method in the classes under this <code>&lt;test&gt;</code> tag.</li>
+  <li><code>@BeforeClass</code> runs before the first test method in the current class.</li>
+  <li><code>@BeforeMethod</code> runs before each individual test method.</li>
+  <li><code>@Test</code> is the method itself.</li>
+  <li><code>@AfterMethod</code> runs after each test method.</li>
+  <li><code>@AfterClass</code> runs once every test method in the class has finished.</li>
+  <li><code>@AfterTest</code> runs once every class under the <code>&lt;test&gt;</code> tag has finished.</li>
+  <li><code>@AfterSuite</code> runs once, after the whole suite finishes.</li>
+</ol>
+
+<figure>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 720 520" role="img" aria-label="Execution nests like brackets: Suite wraps Test wraps Class wraps Method, with the @Test method at the center. Steps 1 to 4 enter through BeforeSuite, BeforeTest, BeforeClass and BeforeMethod; step 5 is the test itself; steps 6 to 9 exit back out through AfterMethod, AfterClass, AfterTest and AfterSuite.">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <rect x="20" y="20" width="680" height="480" rx="16" fill="none" stroke="currentColor" stroke-opacity="0.35"/>
+      <rect x="64" y="64" width="592" height="392" rx="14" fill="none" stroke="currentColor" stroke-opacity="0.45"/>
+      <rect x="108" y="108" width="504" height="304" rx="12" fill="none" stroke="currentColor" stroke-opacity="0.55"/>
+      <rect x="152" y="152" width="416" height="216" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.7"/>
+      <rect x="292" y="236" width="136" height="48" rx="8" fill="none" stroke="var(--accent)" stroke-width="2"/>
+
+      <text x="690" y="38" text-anchor="end" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1" fill="currentColor" fill-opacity="0.6">SUITE</text>
+      <text x="646" y="82" text-anchor="end" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1" fill="currentColor" fill-opacity="0.6">TEST</text>
+      <text x="602" y="126" text-anchor="end" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1" fill="currentColor" fill-opacity="0.6">CLASS</text>
+      <text x="558" y="170" text-anchor="end" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1" fill="currentColor" fill-opacity="0.6">METHOD</text>
+      <text x="360" y="264" text-anchor="middle" font-size="13" font-family="JetBrains Mono, monospace" font-weight="700" fill="var(--accent)">@Test</text>
+
+      <polyline points="46,42 90,86 134,130 178,194 292,260" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <polyline points="428,260 542,326 586,390 630,434 674,478" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor">
+        <circle cx="46" cy="42" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="46" y="46" text-anchor="middle">1</text>
+        <text x="62" y="34" fill-opacity="0.75">@BeforeSuite</text>
+
+        <circle cx="90" cy="86" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="90" y="90" text-anchor="middle">2</text>
+        <text x="106" y="78" fill-opacity="0.75">@BeforeTest</text>
+
+        <circle cx="134" cy="130" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="134" y="134" text-anchor="middle">3</text>
+        <text x="150" y="122" fill-opacity="0.75">@BeforeClass</text>
+
+        <circle cx="178" cy="194" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="178" y="198" text-anchor="middle">4</text>
+        <text x="194" y="186" fill-opacity="0.75">@BeforeMethod</text>
+
+        <circle cx="542" cy="326" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="542" y="330" text-anchor="middle">6</text>
+        <text x="526" y="340" text-anchor="end" fill-opacity="0.75">@AfterMethod</text>
+
+        <circle cx="586" cy="390" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="586" y="394" text-anchor="middle">7</text>
+        <text x="570" y="404" text-anchor="end" fill-opacity="0.75">@AfterClass</text>
+
+        <circle cx="630" cy="434" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="630" y="438" text-anchor="middle">8</text>
+        <text x="614" y="448" text-anchor="end" fill-opacity="0.75">@AfterTest</text>
+
+        <circle cx="674" cy="478" r="12" fill="var(--bg)" stroke="currentColor"/>
+        <text x="674" y="482" text-anchor="middle">9</text>
+        <text x="658" y="492" text-anchor="end" fill-opacity="0.75">@AfterSuite</text>
+      </g>
+
+      <circle cx="360" cy="228" r="12" fill="var(--accent)"/>
+      <text x="360" y="232" text-anchor="middle" font-size="11" font-family="JetBrains Mono, monospace" fill="var(--accent-contrast)">5</text>
+
+      <path d="M400,284 Q360,322 320,284" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+      <text x="360" y="342" text-anchor="middle" font-size="11" font-family="JetBrains Mono, monospace" fill="var(--accent)">repeats per @Test method</text>
+    </svg>
+  </div>
+  <figcaption>Execution nests like brackets: Suite wraps Test wraps Class wraps Method, and the @Test sits at the center. BeforeMethod and AfterMethod (steps 4 and 6) repeat once for every test method in the class — everything else fires once per scope.</figcaption>
+</figure>
+
+<p>These annotations are also inherited. Put <code>@BeforeClass</code> on a superclass and every subclass honors it without redeclaring anything — that's exactly how the base class in step 4 below hands a working <code>WebDriver</code> to every test that extends it.</p>
+
+<h2><span class="rest">three more annotations</span></h2>
+<ul>
+  <li><strong><code>@DataProvider</code></strong> feeds one <code>@Test</code> method multiple rows of input, turning a single method into many test cases.</li>
+  <li><strong><code>@Listeners</code></strong> hooks into TestNG's own lifecycle (a screenshot on failure, a custom report) without touching your test classes.</li>
+  <li><strong><code>@Parameters</code></strong> reads values straight from <code>testng.xml</code> into a test method's arguments.</li>
+</ul>
+<p>Parameters can come from three places, and it's worth knowing which one you're looking at when you read a report: values declared in <code>testng.xml</code>, values generated by a <code>@DataProvider</code>, and whatever value actually landed in the test report next to a given result.</p>
+
+<div class="callout">
+  <span class="label">rule that survives every refactor</span>
+  <p>Never declare test data as a class-level variable. It reads fine at ten tests. At a hundred, spread across a dozen packages, nobody can tell which method owns which value, and changing one input means grepping the whole codebase to find what else depends on it. Isolate it from day one.</p>
+</div>
+
+<h2><span class="rest">step 1 — the rough draft</span></h2>
+<p><code>com.guide.beginners.testng.theinternet.individualtestclass.Step1</code></p>
+<p>Before designing anything, write a test that achieves one simple goal and prove the interaction works end to end. This step is rough on purpose. It exists to confirm the browser flow is correct before you spend a minute on structure.</p>
+
+<h3>step 2 — pulling data out</h3>
+<p><code>com.guide.beginners.testng.theinternet.individualtestclass.Step2</code></p>
+<p>Data and page objects separate from the test itself, though everything is still declared <code>private</code> at the class level here. You're not fully isolating it yet, but you've started chaining TestNG annotations to control setup order instead of doing it all inline.</p>
+
+<h3>step 3 — isolating data for real</h3>
+<p><code>com.guide.beginners.testng.theinternet.individualtestclass.Step3</code></p>
+<p>Test data moves out of the class entirely and into <code>src/test/resources/testngsuite/seleniumsuite.xml</code>, passed in through TestNG's own parameter system. This is where <code>@Optional</code> earns its keep: it marks a parameter as skippable and gives it a default (or <code>null</code>) when the suite file doesn't supply one.</p>
+
+<h3>step 4 — a base class worth inheriting</h3>
+<p><code>com.guide.beginners.testng.theinternet.frameworktestng.base</code></p>
+<p>Driver setup and teardown move to a base class: <code>@BeforeClass</code> and <code>@AfterClass</code> own the <code>WebDriver</code>'s lifecycle, and <code>@BeforeMethod</code> owns per-test setup: launching the URL, resetting whatever state needs resetting. Each test class becomes a scenario with one or more <code>@Test</code> cases; it just extends this base and inherits the plumbing for free.</p>
+
+<h2><span class="rest">running in parallel</span></h2>
+<p>TestNG can spread your tests across threads four different ways, and each one solves a different problem:</p>
+<ul>
+  <li><strong>suites</strong> puts one thread per suite file, which helps when you're running several <code>.xml</code> files at once.</li>
+  <li><strong>methods</strong> gives every test method its own thread. Dependent methods still run in the order you declared; they just each get a thread.</li>
+  <li><strong>tests</strong>: everything inside one <code>&lt;test&gt;</code> tag shares a thread, but separate <code>&lt;test&gt;</code> tags run in parallel. Group classes that aren't thread-safe under the same tag and you keep them safe without losing parallelism elsewhere.</li>
+  <li><strong>classes</strong> hands each class its own thread; methods inside it share that thread.</li>
+  <li><strong>instances</strong>: two methods on the same instance share a thread, but two methods on different instances of the same class don't.</li>
+</ul>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">testng.xml</span></div>
+  <pre>&lt;suite name="My suite" parallel="methods" thread-count="5"&gt;</pre>
+</div>
+<p>For suite-file-level parallelism specifically, the thread pool size is a command-line flag rather than an XML attribute:</p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>java org.testng.TestNG -suitethreadpoolsize 3 testng1.xml testng2.xml testng3.xml</pre>
+</div>
+<p>One detail worth flagging in your own docs: <code>@Test</code>'s <code>timeOut</code> attribute works in both parallel and non-parallel runs, but you can't drop to method-level parallelism once you've committed to a coarser mode for the same run. Decide the granularity up front.</p>
+
+<h2><span class="rest">running from the command line</span></h2>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">shell</span></div>
+  <pre>mvn clean test -DsuiteXmlFiles=CrossBrowserParallelSuite.xml</pre>
+</div>
+<p>Swap the file name for anything under <code>src/test/resources/testngsuite/</code> and Maven's Surefire plugin picks it up — that property is already wired into this project's <code>pom.xml</code>.</p>
+
+<h2><span class="rest">selenium grid</span></h2>
+<p>Local runs are fine until you need more than one browser, or you want the suite running somewhere that isn't your laptop. Grid solves that: a hub takes your test's requests and hands them to registered nodes, which is where the browsers actually launch. Everything below runs from <code>/src/test/resources/binaries</code>.</p>
+
+<p><strong>Standard configuration, no config file:</strong></p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">hub</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role hub</pre>
+</div>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">node</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role webdriver -hub http://192.168.0.5:4444/grid/register/</pre>
+</div>
+
+<p><strong>Custom configuration, with a config file per role:</strong></p>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">hub</span></div>
+  <pre>java -jar selenium-server-standalone.jar -role hub --hubConfig hubconfig.json</pre>
+</div>
+<div class="term">
+  <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-file">node</span></div>
+  <pre>java -Dwebdriver.chrome.driver="chromedriver.exe" <span class="c">\</span>
+     -Dwebdriver.ie.driver="IEDriverServer.exe" <span class="c">\</span>
+     -Dwebdriver.gecko.driver="geckodriver.exe" <span class="c">\</span>
+     -jar selenium-server-standalone.jar -role node -nodeConfig nodeconfig.json</pre>
+</div>
+
+<p>That's the standalone-jar version of Grid. This project pins <code>selenium-server-standalone-3.141.59.jar</code>, and it still runs fine for a couple of nodes on one machine. If you're setting Grid up fresh today, look at Selenium Grid 4 instead. It drops the separate hub/node jar dance for a single server (or a Docker Compose file), and it's the more natural next step once you outgrow this setup.</p>
+
+<div class="closing">
+  <p>None of this is complicated on its own. What makes it click is the order: prove the interaction works, then separate the data, then isolate the data for real, then extract the plumbing into something reusable. Skip straight to step 4 and you'll inherit a framework you can't explain. Climb it one rung at a time and you'll have built one instead.</p>
+</div>
+
+</main>
+</body>
+</html>
