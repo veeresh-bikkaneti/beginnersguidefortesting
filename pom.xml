@@ -92,7 +92,7 @@
         <testng.version>7.5.1</testng.version>
         <selenium-java.version>3.14.0</selenium-java.version>
         <log4j.version>2.25.5</log4j.version>
-        <webdrivermanager.version>3.8.1</webdrivermanager.version>
+        <webdrivermanager.version>6.1.0</webdrivermanager.version>
         <assertj-core.version>3.27.7</assertj-core.version>
     </properties>
 
