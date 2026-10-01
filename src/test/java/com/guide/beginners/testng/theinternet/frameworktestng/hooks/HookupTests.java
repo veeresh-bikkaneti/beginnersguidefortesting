@@ -13,15 +13,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class HookupTests extends WaitForSync {
     @Parameters("url")
     @BeforeMethod(alwaysRun = true)
     public void launchTestUrl(@Optional("https://the-internet.herokuapp.com") String aut) {
         driver.get(aut);
-        driver.manage( ).timeouts( ).pageLoadTimeout(MAX_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage( ).timeouts( ).setScriptTimeout(MAX_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage( ).timeouts( ).pageLoadTimeout(Duration.ofSeconds(MAX_TIMEOUT));
+        driver.manage( ).timeouts( ).scriptTimeout(Duration.ofSeconds(MAX_TIMEOUT));
         sleep(MAX_TIMEOUT);
         logger.info("launching url:" + aut);
         WelcomePO welcomePO=new WelcomePO();

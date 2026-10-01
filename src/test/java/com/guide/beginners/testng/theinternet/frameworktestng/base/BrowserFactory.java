@@ -17,8 +17,6 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -50,8 +48,11 @@ public class BrowserFactory {
                 break;
 
             case "opera":
-                WebDriverManager.operadriver( ).setup( );
-                driver.set(new OperaDriver( ));
+                // Selenium 4 dropped the standalone Opera driver (selenium-opera-driver is no
+                // longer part of selenium-java); Opera is Chromium-based, so drive it via Chrome.
+                logger.info("Opera-specific driver removed in Selenium 4; falling back to chrome.");
+                WebDriverManager.chromedriver( ).setup( );
+                driver.set(new ChromeDriver( ));
                 break;
 
             default:
@@ -96,10 +97,12 @@ public class BrowserFactory {
                 firefoxOptions.merge(capability);
                 break;
             case "opera":
+                // No OperaOptions class in Selenium 4 (Opera driver support removed); Opera is
+                // Chromium-based, so advertise it via ChromeOptions like the grid node expects.
                 capability.setBrowserName("opera");
                 capability.setPlatform(Platform.WINDOWS);
-                OperaOptions operaOptions = new OperaOptions( );
-                operaOptions.merge(capability);
+                ChromeOptions operaChromeOptions = new ChromeOptions( );
+                operaChromeOptions.merge(capability);
                 break;
         }
         try {

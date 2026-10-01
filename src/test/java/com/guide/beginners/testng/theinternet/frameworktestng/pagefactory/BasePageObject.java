@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 /*
  * Created by IntelliJ IDEA.
  * User: Veeresh Bikkaneti
@@ -52,7 +54,7 @@ public class BasePageObject {
      */
     private void waitFor(ExpectedCondition<WebElement> condition, Integer timeOutInSeconds) {
         timeOutInSeconds = timeOutInSeconds != null ? timeOutInSeconds : WAIT_FOR_ELE;
-        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
         wait.until(condition);
     }
 

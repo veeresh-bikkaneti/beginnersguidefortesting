@@ -9,8 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -68,14 +68,14 @@ public class QuestionsAroundStrings {
         webDriverInstance
                 .manage( )
                 .timeouts( )
-                .pageLoadTimeout(Long.valueOf(20), TimeUnit.SECONDS);
+                .pageLoadTimeout(Duration.ofSeconds(20));
 
         //Specifies the amount of time the driver should wait when searching for an element if it is not immediately present.
         //Max amount of time that a Webdriver Instance will wait before throwing NoSuchElementException
         webDriverInstance
                 .manage( )
                 .timeouts( )
-                .implicitlyWait(Long.valueOf(20), TimeUnit.MILLISECONDS);
+                .implicitlyWait(Duration.ofMillis(20));
         System.out.println(webDriverInstance.getTitle( ));
 
         /*
@@ -84,7 +84,7 @@ public class QuestionsAroundStrings {
    list by calling ignoring(exceptions to add).
          */
 
-        assertTrue(new WebDriverWait(webDriverInstance, Long.valueOf(20))
+        assertTrue(new WebDriverWait(webDriverInstance, Duration.ofSeconds(20))
                 .until(ExpectedConditions.titleIs("Google")).booleanValue( ), "*****Url not loaded*****");
 
         /*

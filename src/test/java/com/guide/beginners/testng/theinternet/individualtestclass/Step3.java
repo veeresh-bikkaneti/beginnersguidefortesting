@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
+import java.time.Duration;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -63,8 +63,8 @@ public class Step3 {
                 WebDriverManager.chromedriver( ).setup( );
                 break;
         }
-        webDriverWait = new WebDriverWait(driver, MAX_TIMEOUT);
-        driver.manage( ).timeouts( ).implicitlyWait(MAX_TIMEOUT, TimeUnit.SECONDS);
+        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(MAX_TIMEOUT));
+        driver.manage( ).timeouts( ).implicitlyWait(Duration.ofSeconds(MAX_TIMEOUT));
         logger.info("WebDriver Setup");
         if (Objects.isNull(driver)) {
             logger.throwing(Level.FATAL, new NullPointerException( ));
@@ -75,8 +75,8 @@ public class Step3 {
     @BeforeMethod
     void BeforeMethod(@Optional("https://the-internet.herokuapp.com/login") String aut) {
         driver.get(aut);
-        driver.manage( ).timeouts( ).pageLoadTimeout(MAX_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage( ).timeouts( ).setScriptTimeout(MAX_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage( ).timeouts( ).pageLoadTimeout(Duration.ofSeconds(MAX_TIMEOUT));
+        driver.manage( ).timeouts( ).scriptTimeout(Duration.ofSeconds(MAX_TIMEOUT));
         logger.info("launching url:" + aut);
     }
 
